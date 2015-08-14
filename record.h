@@ -40,12 +40,13 @@ private:
 	CRecorder( const CRecorder& re ){}
 
 	/**
-	* @brief : 根据bits获得format
+	* @brief : 根据sample type获得format
 	*/
 	PaSampleFormat GetSampleFormat();
 
 	template<class T>
 	static int _DoRecord( RecordData* data, T wptr,const void* inputBuffer, double silence );
+	static int __DoRecord();
 
 private:
 	static RecordeInfo m_Info;

@@ -49,8 +49,8 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../newRecord/include/portaudio</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;FREEGLUT_STATIC;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../newRecord/include/gl;../newRecord/include/SDL;../newRecord/include/portaudio</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -76,11 +76,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="opengl_part.h" />
     <ClInclude Include="record.h" />
+    <ClInclude Include="recordplayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="newRecordMain.cpp" />
+    <ClCompile Include="opengl_part.cpp" />
     <ClCompile Include="record.cpp" />
+    <ClCompile Include="recordplayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
