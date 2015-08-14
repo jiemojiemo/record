@@ -142,23 +142,6 @@ int CRecorder::StartRecord()
 		Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
 	inputParameters.hostApiSpecificStreamInfo = NULL;
 
-	//指定相应的录音回调函数
-	static auto pFunc = recordCallback32Bits;
-
-	switch( m_Info.sampleType )
-	{
-	case SAMPLE_TYPE_FLOAT32:
-		pFunc = recordCallback32Bits;
-		break;
-	case SAMPLE_TYPE_INT16:
-		break;
-	case SAMPLE_TYPE_INT8:
-		break;
-	case SAMPLE_TYPE_UINT8:
-		break;
-	default:
-		break;
-	}
 
 	//打开音频流，进行准备录音
 	err = Pa_OpenStream( &m_Stream,
@@ -167,7 +150,7 @@ int CRecorder::StartRecord()
 		m_Info.sampleRate,
 		m_Info.framesPerBuffer,
 		paClipOff,
-		pFunc,
+		recordCallback,
 		&m_Data
 		);
 
@@ -249,7 +232,7 @@ void CRecorder::SavePcm2File( const char* inFile )
 }
 
 /*******************************
-**（函数名）recordCallback32Bits
+**（函数名）recordCallback
 **（参数）@Param inputBuffer: 输入流
 **（参数）@Param outputBuffer：输出流
 **（参数）@Param framesPerBuffer：缓冲区大小
@@ -264,7 +247,7 @@ void CRecorder::SavePcm2File( const char* inFile )
 **（修改日期）ModifyDate：
 **（版本）Version：
 *******************************/
-int CRecorder::recordCallback32Bits(const void *inputBuffer, 
+int CRecorder::recordCallback(const void *inputBuffer, 
 	void *outputBuffer, unsigned long framesPerBuffer, 
 	const PaStreamCallbackTimeInfo* timeInfo,
 	PaStreamCallbackFlags statusFlags, void *userData)

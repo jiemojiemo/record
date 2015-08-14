@@ -78,9 +78,9 @@ public:
 	void SavePcm2File( const char* inFile );
 
 	/**
-	* @brief : 32bits 录音的回调函数 
+	* @brief :录音的回调函数 
 	*/
-	static int recordCallback32Bits(
+	static int recordCallback(
 		const void *inputBuffer, void *outputBuffer,
 		unsigned long framesPerBuffer,
 		const PaStreamCallbackTimeInfo* timeInfo,
