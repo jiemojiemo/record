@@ -21,21 +21,12 @@
     <ClInclude Include="recordplayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opengl_part.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="record.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="newRecordMain.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="recordplayer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="opengl_part.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

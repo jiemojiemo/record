@@ -46,7 +46,8 @@ private:
 
 	template<class T>
 	static int _DoRecord( RecordData* data, T wptr,const void* inputBuffer, double silence );
-	static int __DoRecord();
+	template<class T>
+	static int __DoRecord( void* userData,const void* inputBuffer, double silence, T type );
 
 private:
 	static RecordeInfo m_Info;

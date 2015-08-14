@@ -1,7 +1,7 @@
 #include "record.h"
 #include <stdio.h>
 #include <string>
-
+#include <iostream>
 RecordeInfo CRecorder::m_Info;
 
 CRecorder::CRecorder()
@@ -253,7 +253,7 @@ int CRecorder::recordCallback(const void *inputBuffer,
 	PaStreamCallbackFlags statusFlags, void *userData)
 {
 	RecordData* data = (RecordData*)userData;
-	
+
 	(void) outputBuffer; /* Prevent unused variable warnings. */
 	(void) timeInfo;
 	(void) statusFlags;
@@ -287,6 +287,35 @@ int CRecorder::recordCallback(const void *inputBuffer,
 		return _DoRecord( data, wptr,inputBuffer, 128 );
 	}
 
+	//(void) outputBuffer; /* Prevent unused variable warnings. */
+	//(void) timeInfo;
+	//(void) statusFlags;
+	//(void) userData;
+
+	//if( m_Info.sampleType == SAMPLE_TYPE_FLOAT32 )
+	//{
+	//	float type = 0.0;
+	//	__DoRecord(userData,inputBuffer,0.0,type);
+	//}
+
+	//else if( m_Info.sampleType == SAMPLE_TYPE_INT16 )
+	//{
+	//	short type = 0;
+	//	__DoRecord(userData,inputBuffer,0.0,type);
+	//}
+
+	//else if( m_Info.sampleType == SAMPLE_TYPE_INT8 )
+	//{
+	//	char type = 0;
+	//	__DoRecord(userData,inputBuffer,0.0,type);
+	//}
+
+	//else if( m_Info.sampleType == SAMPLE_TYPE_UINT8 )
+	//{
+	//	unsigned char type = 0;
+	//	__DoRecord(userData,inputBuffer,128,type);
+	//}
+
 	return 1;
 }
 
@@ -313,6 +342,7 @@ int CRecorder::_DoRecord( RecordData* data, T wptr,const void* inputBuffer, doub
 	unsigned long framesLeft = data->maxFrameIndex - data->frameIndex;
 
 	const float* rptr = (const float*)inputBuffer;
+	//const decltype(wptr) rptr = (const decltype(wptr))inputBuffer;
 	if( framesLeft < m_Info.framesPerBuffer )
 	{
 		framesToCalc = framesLeft;
@@ -334,6 +364,46 @@ int CRecorder::_DoRecord( RecordData* data, T wptr,const void* inputBuffer, doub
 		for( i=0; i<framesToCalc * m_Info.channels; i++ )
 		{
 			*wptr++ = *rptr++;  /* left */
+		}
+	}
+	data->frameIndex += framesToCalc;
+	return finished;
+}
+
+template <typename T>
+int CRecorder::__DoRecord( void* userData,const void* inputBuffer, double silence, T type )
+{
+	RecordData *data = (RecordData*)userData;
+	const decltype(type) *rptr = (const decltype(type)*)inputBuffer;
+	decltype(type)* buffer = (decltype(type)*)&data->recordedSamples;
+	decltype(type) *wptr = &buffer[data->frameIndex * m_Info.channels];
+	long framesToCalc;
+	long i;
+	int finished;
+	unsigned long framesLeft = data->maxFrameIndex - data->frameIndex;
+
+	if( framesLeft < m_Info.framesPerBuffer )
+	{
+		framesToCalc = framesLeft;
+		finished = paComplete;
+	}
+	else
+	{
+		framesToCalc = m_Info.framesPerBuffer;
+		finished = paContinue;
+	}
+
+	if( inputBuffer == NULL )
+	{
+		for( i=0; i<framesToCalc * m_Info.channels; i++ )
+			*wptr++ = silence;
+	}
+	else
+	{
+		for( i=0; i<framesToCalc * m_Info.channels; i++ )
+		{
+			//*wptr++ = *rptr++;  /* left */
+			*wptr++ = *rptr++;	
 		}
 	}
 	data->frameIndex += framesToCalc;

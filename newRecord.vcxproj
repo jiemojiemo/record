@@ -76,15 +76,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="opengl_part.h" />
     <ClInclude Include="record.h" />
     <ClInclude Include="recordplayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="newRecordMain.cpp" />
-    <ClCompile Include="opengl_part.cpp" />
     <ClCompile Include="record.cpp" />
-    <ClCompile Include="recordplayer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
