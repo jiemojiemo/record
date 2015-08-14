@@ -66,6 +66,8 @@ public:
 	* @brief : 获取录音参数
 	*/
 	RecordeInfo GetInfo()const;
+	void* GetData()const{ return m_Data.recordedSamples; }
+	unsigned long GetDataSize()const { return m_Data.totalBytes; }
 
 	/**
 	* @brief : 根据录音参数，进行录音

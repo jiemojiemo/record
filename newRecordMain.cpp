@@ -1,4 +1,5 @@
 #include "record.h"
+#include <stdio.h>
 
 #pragma comment( lib, "portaudio_x86.lib" )
 
@@ -14,6 +15,8 @@ int main()
 	CRecorder recorder( info );
 	recorder.StartRecord();
 	recorder.SavePcm2File( "pcm_2_44100_float_5" );
+
+	printf( "Data size:%ld\n",recorder.GetDataSize() );
 
 	return 0;
 }
